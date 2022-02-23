@@ -18,8 +18,9 @@ def downloadNsmc(filename = "nsmc.zip"):
             t.close()
 
 if __name__ == "__main__":
-    os.makedirs("nsmc")
+    os.makedirs("nsmc", exist_ok=True)
     if not os.path.exists("nsmc.zip"):
         downloadNsmc()
     with zipfile.ZipFile("nsmc.zip") as nsmc:
-        nsmc.extractall("nsmc")
+        for member in tqdm.tqdm(nsmc.infolist(), desc="Extracting", unit="files"):
+            nsmc.extract(member,"nsmc")
