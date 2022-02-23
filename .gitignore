@@ -2,3 +2,4 @@ nsmc/**/*
 nsmc.zip
 .ipynb_checkpoints/**/*
 __pycache__/**/*
+model.zip
