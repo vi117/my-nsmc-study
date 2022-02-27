@@ -7,13 +7,15 @@ from ndata import readNsmcRawData, NsmcRawData
 
 def readNsmcDataAll():
     """
-    Returns: train, test
+    Returns: train, dev, test
     """
     print("read train set", file=sys.stderr)
     train = readNsmcRawData("nsmc/nsmc-master/ratings_train.txt",use_tqdm=True,total=150_000)
     print("read test set", file=sys.stderr)
-    test = readNsmcRawData("nsmc/nsmc-master/ratings_test.txt",use_tqdm=True,total=50_000)
-    return NsmcDataset(train),NsmcDataset(test)
+    testBig = readNsmcRawData("nsmc/nsmc-master/ratings_test.txt",use_tqdm=True,total=50_000)
+    test = testBig[:30_000]
+    dev = testBig[30_000:]
+    return NsmcDataset(train),NsmcDataset(dev),NsmcDataset(test)
 
 class NsmcDataset(Dataset):
     def __init__(self, data: List[NsmcRawData]):
